@@ -2,7 +2,21 @@
 # Helper method to write file length in a more human readable format
 function Write-FileLength
 {
-    param ($length)
+    param ($file)
+
+    $length = $file.length
+
+    if ( $file.PSIsContainer -eq $true) {
+        if ($file.ReparsePoint.ReparsePointTag -eq "SymbolicLink") {
+            return '<SYMLINKD>'
+        }
+        elseif ($file.ReparsePoint.ReparsePointTag -eq "MountPoint") {
+            return '<JUNCTION>'
+        }
+        else {
+            return '<DIR>'
+        }
+    }
 
     if ($length -eq $null)
     {
@@ -24,12 +38,28 @@ function Write-FileLength
     return $length.ToString() + '  '
 }
 
+# Helper method to write juntion/symlink dst
+function Write-FileName
+{
+    param ($file)
+
+    if ( $file.PSIsContainer -eq $true) {
+        if ( !($file.ReparsePoint.ReparsePointTag -eq $null) ) {
+            return $file.Name + " [$($file.ReparsePoint.Target)]"
+        } else {
+            return $file.Name
+        }
+    } else {
+            return $file.Name
+    }
+}
+
 # Outputs a line of a DirectoryInfo or FileInfo
 function Write-Color-LS
 {
     param ([string]$color = "white", $file)
 
-    Write-host ("{0,-7} {1,25} {2,10} {3}" -f $file.mode, ([String]::Format("{0,10}  {1,8}", $file.LastWriteTime.ToString("d"), $file.LastWriteTime.ToString("t"))), (Write-FileLength $file.length), $file.name) -foregroundcolor $color
+    Write-host ("{0,-7} {1,25} {2,10} {3}" -f $file.mode, ([String]::Format("{0,10}  {1,8}", $file.LastWriteTime.ToString("d"), $file.LastWriteTime.ToString("t"))), (Write-FileLength $file), (Write-FileName $file)) -foregroundcolor $color
 }
 
 function FileInfo {
