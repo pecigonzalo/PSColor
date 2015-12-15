@@ -83,9 +83,6 @@ function FileInfo {
 
     if($script:showHeader)
     {
-       Write-Host
-       Write-Host "    Directory: " -noNewLine
-       Write-Host " $(pwd)`n" -foregroundcolor "Green"
        Write-Host "Mode                LastWriteTime     Length Name"
        Write-Host "----                -------------     ------ ----"
        $script:showHeader=$false
