@@ -35,7 +35,7 @@ function Write-FileLength
         return ($length / 1KB).ToString("F") + 'KB'
     }
 
-    return $length.ToString() + '  '
+    return $length.ToString() + 'B'
 }
 
 # Helper method to write juntion/symlink dst
@@ -44,8 +44,8 @@ function Write-FileName
     param ($file)
 
     if ( $file.PSIsContainer -eq $true) {
-        if ( !($file.ReparsePoint.ReparsePointTag -eq $null) ) {
-            return $file.Name + " [$($file.ReparsePoint.Target)]"
+        if ( $file.ReparsePoint.ReparsePointTag ) {
+            return $file.Name + " -> [$($file.ReparsePoint.Target)]"
         } else {
             return $file.Name
         }
@@ -94,6 +94,10 @@ function FileInfo {
     if ($hidden.IsMatch($file.Name))
     {
         Write-Color-LS $global:PSColor.File.Hidden.Color $file
+    }
+    elseif ($file.ReparsePoint.ReparsePointTag)
+    {
+        Write-Color-LS $global:PSColor.File.Reparse.Color $file
     }
     elseif ($file -is [System.IO.DirectoryInfo])
     {

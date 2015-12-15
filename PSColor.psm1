@@ -13,6 +13,7 @@ $global:PSColor = @{
     File = @{
         Default    = @{ Color = 'White' }
         Directory  = @{ Color = 'Cyan'}
+        Reparse    = @{ Color = 'Magenta'}
         Hidden     = @{ Color = 'DarkGray'; Pattern = '^\.' } 
         Code       = @{ Color = 'Magenta'; Pattern = '\.(java|c|cpp|cs|js|css|html)$' }
         Executable = @{ Color = 'Red'; Pattern = '\.(exe|bat|cmd|py|pl|ps1|psm1|vbs|rb|reg)$' }
