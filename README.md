@@ -8,9 +8,7 @@ Provides color highlighting for some basic PowerShell output. It currently rewri
 
 ## Installation
 
-The easiest way to install, by far, is to use [PsGet](http://psget.net/). Once PsGet is installed you can simply run `Install-Module PSColor`.
-
-Alternativly, you can download the file [PSColor.zip](https://github.com/Davlind/PSColor/raw/master/release/PSColor.zip) and extract it to a folder named `PSColor` in any of your PowerShell module paths. (Run `$env:PSModulePath` to see your paths.)
+To install clone this repo to a folder named `PSColor` in any of your PowerShell module paths. (Run `$env:PSModulePath` to see your paths.)
 
 If you want PSColor to be ran automatically you can add `Import-Module PSColor` to your PowerShell Profile. To locate your profile, run `$profile`
 
